@@ -20,7 +20,7 @@ async def submit_claim(req: ClaimSubmitRequest, request: Request) -> ClaimRespon
     member = get_member(req.member_id)
     if not member:
         member = {"member_id": req.member_id, "name": req.member_name,
-                  "join_date": None, "is_active": True}
+                  "join_date": None, "status": "active"}
         save_member(req.member_id, member)
 
     docs = [d.model_dump() for d in req.documents]

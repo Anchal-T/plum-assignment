@@ -133,7 +133,7 @@ class RuleEngine:
         join_date = _to_date(member.get("join_date"))
         diagnosis = (merged.get("diagnosis") or "").lower()
 
-        if not member.get("is_active", False):
+        if member.get("status") != "active":
             codes.append(RejectionCode.POLICY_INACTIVE)
 
         effective = _to_date(self.policy.get("effective_date"))

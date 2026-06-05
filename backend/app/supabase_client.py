@@ -39,11 +39,7 @@ def save_claim(claim_id: str, claim_data: dict):
                 "claim_id": claim_id,
                 "decision": dec["decision"],
                 "approved_amount": dec["approved_amount"],
-                "copay_amount": dec["copay_amount"],
-                "network_discount": dec["network_discount"],
                 "rejection_reasons": dec.get("rejection_reasons", []),
-                "adjudication_steps": dec.get("adjudication_steps", []),
-                "fraud_flags": dec.get("fraud_flags", []),
                 "confidence_score": dec.get("confidence_score", 0),
                 "notes": dec.get("notes", ""),
                 "next_steps": dec.get("next_steps", ""),
@@ -73,7 +69,7 @@ def save_member(member_id: str, member_data: dict):
             "member_id": member_id,
             "name": member_data["name"],
             "join_date": member_data.get("join_date"),
-            "is_active": member_data.get("is_active", True),
+            "status": "active",
         }).execute()
     mem_save_member(member_id, member_data)
 
