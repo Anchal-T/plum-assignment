@@ -18,7 +18,7 @@ _SUFFIX_MAP = {
 }
 
 _processor = DocumentProcessor()
-_llm = LLMService(api_key=settings.openai_api_key, model=settings.openai_model)
+_llm = LLMService(api_key=settings.gemini_api_key, model=settings.gemini_model)
 
 
 @router.post("/process")

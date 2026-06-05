@@ -9,8 +9,8 @@ class Settings(BaseSettings):
     supabase_key: str = ""
     supabase_service_key: str = ""
 
-    openai_api_key: str = ""
-    openai_model: str = "gpt-4o"
+    gemini_api_key: str = ""
+    gemini_model: str = "gemini-3.5-flash"
 
     upload_dir: str = "./uploads"
     max_file_size_mb: int = 10

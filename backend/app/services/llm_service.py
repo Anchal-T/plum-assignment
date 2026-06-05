@@ -69,12 +69,12 @@ class ExtractedDocument:
 
 
 class LLMService:
-    """Uses OpenAI GPT-4o to extract structured data from OCR text.
+    """Uses Google Gemini to extract structured data from OCR text.
 
-    Falls back to a basic text parser if OpenAI is unavailable.
+    Falls back to a basic text parser if Gemini is unavailable.
     """
 
-    def __init__(self, api_key: str | None = None, model: str = "gpt-4o"):
+    def __init__(self, api_key: str | None = None, model: str = "gemini-3.5-flash"):
         self.api_key = api_key
         self.model = model
         self._client = None
@@ -83,8 +83,8 @@ class LLMService:
     def client(self):
         if self._client is None and self.api_key:
             try:
-                from openai import AsyncOpenAI
-                self._client = AsyncOpenAI(api_key=self.api_key)
+                from google import genai
+                self._client = genai.Client(api_key=self.api_key)
             except Exception:
                 pass
         return self._client
@@ -98,18 +98,22 @@ class LLMService:
         return self._fallback_extract(raw_text, mime_type)
 
     async def _extract_with_llm(self, raw_text: str) -> ExtractedDocument:
-        response = await self.client.chat.completions.create(
+        import asyncio
+
+        prompt = f"{SYSTEM_PROMPT}\n\n{EXTRACTION_PROMPT.format(raw_text=raw_text[:10000])}"
+
+        response = await asyncio.to_thread(
+            self.client.models.generate_content,
             model=self.model,
-            response_format={"type": "json_object"},
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": EXTRACTION_PROMPT.format(raw_text=raw_text[:10000])},
-            ],
-            temperature=0.1,
-            max_tokens=2000,
-            timeout=30,
+            contents=prompt,
+            config={
+                "response_mime_type": "application/json",
+                "temperature": 0.1,
+                "max_output_tokens": 2000,
+            },
         )
-        content = response.choices[0].message.content
+
+        content = response.text
         parsed = json.loads(content)
         return ExtractedDocument.from_dict(parsed)
 
