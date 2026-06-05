@@ -22,8 +22,8 @@ def create_app() -> FastAPI:
         CORSMiddleware,
         allow_origins=[
             "http://localhost:5173",
-            "https://plum-assignment-99an.vercel.app",
-            "https://plum-assignment-99an-anchal-ts-projects.vercel.app",
+            "https://plum-assignment-five.vercel.app",
+            "https://plum-assignment-anchal-ts-projects.vercel.app",
         ],
         allow_credentials=True,
         allow_methods=["*"],
