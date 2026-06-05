@@ -165,3 +165,4 @@ const notesBox: React.CSSProperties = { marginTop: 16, padding: 12, background: 
 const nextStepsText: React.CSSProperties = { marginTop: 12, fontStyle: "italic", color: "#666", fontSize: 14 };
 const resetButton: React.CSSProperties = { marginTop: 16, padding: "8px 16px", background: "#f3f4f6", border: "1px solid #d1d5db", borderRadius: 4, cursor: "pointer" };
 const formSection: React.CSSProperties = { marginBottom: 20 };
+const errorBox: React.CSSProperties = { padding: 12, background: "#fef2f2", borderRadius: 6, color: "#991b1b" };
