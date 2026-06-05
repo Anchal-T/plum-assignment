@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 
 class DocumentField(BaseModel):
-    doc_type: str
+    doc_type: str = "unknown"
     fields: dict = {}
     confidence: float = 0.95
 

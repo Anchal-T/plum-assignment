@@ -61,7 +61,7 @@ class ExtractedDocument:
     @classmethod
     def from_dict(cls, data: dict) -> "ExtractedDocument":
         return cls(
-            doc_type=data.get("doc_type", "unknown"),
+            doc_type=data.get("doc_type") or "unknown",
             fields=data.get("fields", {}),
             confidence=data.get("confidence", 0.0),
             warnings=data.get("warnings", []),
